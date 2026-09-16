@@ -1,0 +1,16 @@
+# NVIDIA 8GB VRAM host: cp ops/gpu/docker-compose.override.gpu.yml docker-compose.override.yml
+services:
+  backend:
+    build:
+      context: .
+      args:
+        GPU: "1"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu, video]
